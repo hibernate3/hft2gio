@@ -25,7 +25,13 @@ object DataTrans {
     val sqlContext = SparkSession.builder().master("local").appName(this.getClass.getSimpleName).enableHiveSupport().getOrCreate()
     sqlContext.sparkContext.setLogLevel("WARN")
 
-    //    sqlContext.sql("select * from buried_point.ods_ext_hdb_buried_data").show()
+    sqlContext.sparkContext.hadoopConfiguration.addResource("dev/core-site.xml")
+    sqlContext.sparkContext.hadoopConfiguration.addResource("dev/hdfs-site.xml")
+    sqlContext.sparkContext.hadoopConfiguration.addResource("dev/hive-site.xml")
+    sqlContext.sparkContext.hadoopConfiguration.addResource("dev/mapred-site.xml")
+    sqlContext.sparkContext.hadoopConfiguration.addResource("dev/yarn-site.xml")
+
+//    sqlContext.sql("select * from buried_point.ods_ext_hdb_buried_data").show()
 
     executeSyPageView(sqlContext)
 //    executeSyChooseCity(sqlContext)
