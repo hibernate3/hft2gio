@@ -4,7 +4,7 @@
 <configuration>
   <property>
     <name>hive.metastore.uris</name>
-    <value>thrift://bigdata-dev-zk-01:9083,thrift://bigdata-dev-zk-02:9083</value>
+    <value>thrift://bigdata-prd-zk-01:9083,thrift://bigdata-prd-zk-02:9083</value>
   </property>
   <property>
     <name>hive.metastore.client.socket.timeout</name>
@@ -24,7 +24,7 @@
   </property>
   <property>
     <name>hive.auto.convert.join.noconditionaltask.size</name>
-    <value>20971520</value>
+    <value>6442450000</value>
   </property>
   <property>
     <name>hive.optimize.bucketmapjoin.sortedmerge</name>
@@ -160,11 +160,11 @@
   </property>
   <property>
     <name>spark.executor.memory</name>
-    <value>3773274521b</value>
+    <value>3338882252b</value>
   </property>
   <property>
     <name>spark.driver.memory</name>
-    <value>966367641b</value>
+    <value>3865470566b</value>
   </property>
   <property>
     <name>spark.executor.cores</name>
@@ -172,11 +172,11 @@
   </property>
   <property>
     <name>spark.yarn.driver.memoryOverhead</name>
-    <value>102m</value>
+    <value>409m</value>
   </property>
   <property>
     <name>spark.yarn.executor.memoryOverhead</name>
-    <value>635m</value>
+    <value>561m</value>
   </property>
   <property>
     <name>spark.dynamicAllocation.enabled</name>
@@ -204,7 +204,7 @@
   </property>
   <property>
     <name>hive.zookeeper.quorum</name>
-    <value>bigdata-dev-zk-01,bigdata-dev-zk-03,bigdata-dev-zk-02,bigdata-dev-nn-02,bigdata-dev-nn-01</value>
+    <value>bigdata-prd-zk-02,bigdata-prd-nn-02,bigdata-prd-nn-01,bigdata-prd-zk-01,bigdata-prd-zk-03</value>
   </property>
   <property>
     <name>hive.zookeeper.client.port</name>
@@ -215,12 +215,20 @@
     <value>hive_zookeeper_namespace_hive</value>
   </property>
   <property>
+    <name>hbase.zookeeper.quorum</name>
+    <value>bigdata-prd-zk-02,bigdata-prd-nn-02,bigdata-prd-nn-01,bigdata-prd-zk-01,bigdata-prd-zk-03</value>
+  </property>
+  <property>
+    <name>hbase.zookeeper.property.clientPort</name>
+    <value>2181</value>
+  </property>
+  <property>
     <name>hive.cluster.delegation.token.store.class</name>
     <value>org.apache.hadoop.hive.thrift.MemoryTokenStore</value>
   </property>
   <property>
     <name>hive.server2.enable.doAs</name>
-    <value>false</value>
+    <value>true</value>
   </property>
   <property>
     <name>hive.server2.use.SSL</name>
@@ -249,9 +257,5 @@
   <property>
     <name>hive.strict.checks.bucketing</name>
     <value>true</value>
-  </property>
-  <property>
-    <name>hive.exec.post.hooks</name>
-    <value>org.apache.atlas.hive.hook.HiveHook</value>
   </property>
 </configuration>

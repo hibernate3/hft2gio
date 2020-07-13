@@ -5,9 +5,9 @@ import org.apache.spark.rdd.RDD
 import org.apache.spark.sql.SparkSession
 import java.io.FileWriter
 
-object DataTrans {
+object DataTransfer {
 
-  val debug: Boolean = true
+  val debug: Boolean = false
 
   case class BaseEvent(user_id: String, event_time: String)
   case class SyChooseCity(user_id: String, event_time: String, element_content: String)
@@ -22,7 +22,7 @@ object DataTrans {
   case class LxCustomerClick(user_id: String, event_time: String, url: String)
 
   def main(args: Array[String]): Unit = {
-    val sqlContext = SparkSession.builder().master("local").appName(this.getClass.getSimpleName).enableHiveSupport().getOrCreate()
+    val sqlContext = SparkSession.builder().appName(this.getClass.getSimpleName).enableHiveSupport().getOrCreate()
     sqlContext.sparkContext.setLogLevel("WARN")
 
     //    sqlContext.sql("select * from buried_point.ods_ext_hdb_buried_data").show()
@@ -64,13 +64,7 @@ object DataTrans {
       }
     })
 
-    jsonRdd.collect().foreach(item => {
-      if (debug) {
-        fileWriter("/Users/hdb-dsj-003/Desktop/syPageView.txt", item)
-      } else {
-        fileWriter("hdfs://bigdata-prd-nn-01:8020/user/wangyuhang/temp/syPageView.txt", item)
-      }
-    })
+    jsonRdd.coalesce(10, true).saveAsTextFile("hdfs://10.71.81.145:8020/temp/wangyuhang/syPageView")
   }
 
   def executeSyChooseCity(sparkSession: SparkSession): Unit ={

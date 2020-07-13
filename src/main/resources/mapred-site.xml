@@ -60,11 +60,11 @@
   </property>
   <property>
     <name>mapreduce.job.reduces</name>
-    <value>16</value>
+    <value>224</value>
   </property>
   <property>
     <name>mapreduce.task.io.sort.mb</name>
-    <value>256</value>
+    <value>1792</value>
   </property>
   <property>
     <name>mapreduce.map.speculative</name>
@@ -80,19 +80,19 @@
   </property>
   <property>
     <name>mapreduce.jobhistory.address</name>
-    <value>bigdata-dev-zk-01:10020</value>
+    <value>bigdata-prd-zk-01:10020</value>
   </property>
   <property>
     <name>mapreduce.jobhistory.webapp.address</name>
-    <value>bigdata-dev-zk-01:19888</value>
+    <value>bigdata-prd-zk-01:19888</value>
   </property>
   <property>
     <name>mapreduce.jobhistory.webapp.https.address</name>
-    <value>bigdata-dev-zk-01:19890</value>
+    <value>bigdata-prd-zk-01:19890</value>
   </property>
   <property>
     <name>mapreduce.jobhistory.admin.address</name>
-    <value>bigdata-dev-zk-01:10033</value>
+    <value>bigdata-prd-zk-01:10033</value>
   </property>
   <property>
     <name>mapreduce.framework.name</name>
@@ -108,7 +108,7 @@
   </property>
   <property>
     <name>yarn.app.mapreduce.am.resource.mb</name>
-    <value>1024</value>
+    <value>4096</value>
   </property>
   <property>
     <name>yarn.app.mapreduce.am.resource.cpu-vcores</name>
@@ -120,7 +120,7 @@
   </property>
   <property>
     <name>yarn.app.mapreduce.am.command-opts</name>
-    <value>-Djava.net.preferIPv4Stack=true -Xmx825955249</value>
+    <value>-Djava.net.preferIPv4Stack=true -Xmx3221225472</value>
   </property>
   <property>
     <name>mapreduce.map.java.opts</name>
@@ -136,7 +136,7 @@
   </property>
   <property>
     <name>mapreduce.map.memory.mb</name>
-    <value>3072</value>
+    <value>6144</value>
   </property>
   <property>
     <name>mapreduce.map.cpu.vcores</name>
@@ -144,7 +144,7 @@
   </property>
   <property>
     <name>mapreduce.reduce.memory.mb</name>
-    <value>6144</value>
+    <value>12288</value>
   </property>
   <property>
     <name>mapreduce.reduce.cpu.vcores</name>
