@@ -21,6 +21,8 @@ object DataTransfer {
   case class LxPhoneClick(user_id: String, event_time: String, element_target_url: String)
   case class LxCustomerClick(user_id: String, event_time: String, url: String)
 
+  val nameNode: String = "10.71.81.145"
+
   def main(args: Array[String]): Unit = {
     val sqlContext = SparkSession.builder().appName(this.getClass.getSimpleName).enableHiveSupport().getOrCreate()
     sqlContext.sparkContext.setLogLevel("WARN")
@@ -28,7 +30,19 @@ object DataTransfer {
     //    sqlContext.sql("select * from buried_point.ods_ext_hdb_buried_data").show()
 
     executeSyPageView(sqlContext)
-//    executeSyChooseCity(sqlContext)
+    executeSyChooseCity(sqlContext)
+    executeLpListClick(sqlContext)
+    executeSearchResultPageView(sqlContext)
+    executeSearchResultClick(sqlContext)
+    executeZxBannerClick(sqlContext)
+    executeZxListPageView(sqlContext)
+    executeZxListClick(sqlContext)
+    executeZxDetailPageView(sqlContext)
+    executeLpDetailPageView(sqlContext)
+    executeFxPosterClick(sqlContext)
+    executeLxPhoneClick(sqlContext)
+    executeLxCustomerClick(sqlContext)
+    executeRegisterPageView(sqlContext)
   }
 
   def executeSyPageView(sparkSession: SparkSession): Unit = {
@@ -64,7 +78,8 @@ object DataTransfer {
       }
     })
 
-    jsonRdd.coalesce(10, true).saveAsTextFile("hdfs://10.71.81.145:8020/temp/wangyuhang/syPageView")
+//    jsonRdd.coalesce(10, true).saveAsTextFile("hdfs://bigdata-prd-nn-02:8020/temp/wangyuhang/syPageView_0")
+    jsonRdd.coalesce(10, true).saveAsTextFile("hdfs://" + nameNode + ":8020/temp/wangyuhang/hft/syPageView")
   }
 
   def executeSyChooseCity(sparkSession: SparkSession): Unit ={
@@ -106,13 +121,7 @@ object DataTransfer {
       }
     })
 
-    jsonRdd.collect().foreach(item => {
-      if (debug) {
-        fileWriter("/Users/hdb-dsj-003/Desktop/syChooseCity.txt", item)
-      } else {
-
-      }
-    })
+    jsonRdd.coalesce(10, true).saveAsTextFile("hdfs://" + nameNode + ":8020/temp/wangyuhang/hft/syChooseCity")
   }
 
   def executeLpListClick(sparkSession: SparkSession): Unit ={
@@ -145,12 +154,7 @@ object DataTransfer {
       }
     })
 
-    jsonRdd.collect().foreach(item => {
-      if (debug) {
-        fileWriter("/Users/hdb-dsj-003/Desktop/lpListClick.txt", item)
-      } else {
-      }
-    })
+    jsonRdd.coalesce(10, true).saveAsTextFile("hdfs://" + nameNode + ":8020/temp/wangyuhang/hft/lpListClick")
   }
 
   def executeSearchResultPageView(sparkSession: SparkSession): Unit ={
@@ -178,13 +182,7 @@ object DataTransfer {
       }
     })
 
-    jsonRdd.collect().foreach(item => {
-      if (debug) {
-        fileWriter("/Users/hdb-dsj-003/Desktop/searchResultPageView.txt", item)
-      } else {
-
-      }
-    })
+    jsonRdd.coalesce(10, true).saveAsTextFile("hdfs://" + nameNode + ":8020/temp/wangyuhang/hft/searchResultPageView")
   }
 
   def executeSearchResultClick(sparkSession: SparkSession): Unit ={
@@ -217,13 +215,7 @@ object DataTransfer {
       }
     })
 
-    jsonRdd.collect().foreach(item => {
-      if (debug) {
-        fileWriter("/Users/hdb-dsj-003/Desktop/searchResultClick.txt", item)
-      } else {
-
-      }
-    })
+    jsonRdd.coalesce(10, true).saveAsTextFile("hdfs://" + nameNode + ":8020/temp/wangyuhang/hft/searchResultClick")
   }
 
   def executeZxBannerClick(sparkSession: SparkSession): Unit = {
@@ -256,13 +248,7 @@ object DataTransfer {
       }
     })
 
-    jsonRdd.collect().foreach(item => {
-      if (debug) {
-        fileWriter("/Users/hdb-dsj-003/Desktop/zxBannerClick.txt", item)
-      } else {
-
-      }
-    })
+    jsonRdd.coalesce(10, true).saveAsTextFile("hdfs://" + nameNode + ":8020/temp/wangyuhang/hft/zxBannerClick")
   }
 
   def executeZxListPageView(sparkSession: SparkSession): Unit = {
@@ -290,13 +276,7 @@ object DataTransfer {
       }
     })
 
-    jsonRdd.collect().foreach(item => {
-      if (debug) {
-        fileWriter("/Users/hdb-dsj-003/Desktop/zxListPageView.txt", item)
-      } else {
-
-      }
-    })
+    jsonRdd.coalesce(10, true).saveAsTextFile("hdfs://" + nameNode + ":8020/temp/wangyuhang/hft/zxListPageView")
   }
 
   def executeZxListClick(sparkSession: SparkSession): Unit = {
@@ -329,13 +309,7 @@ object DataTransfer {
       }
     })
 
-    jsonRdd.collect().foreach(item => {
-      if (debug) {
-        fileWriter("/Users/hdb-dsj-003/Desktop/zxListClick.txt", item)
-      } else {
-
-      }
-    })
+    jsonRdd.coalesce(10, true).saveAsTextFile("hdfs://" + nameNode + ":8020/temp/wangyuhang/hft/zxListClick")
   }
 
   def executeZxDetailPageView(sparkSession: SparkSession): Unit = {
@@ -368,13 +342,7 @@ object DataTransfer {
       }
     })
 
-    jsonRdd.collect().foreach(item => {
-      if (debug) {
-        fileWriter("/Users/hdb-dsj-003/Desktop/zxListClick.txt", item)
-      } else {
-
-      }
-    })
+    jsonRdd.coalesce(10, true).saveAsTextFile("hdfs://" + nameNode + ":8020/temp/wangyuhang/hft/zxDetailPageView")
   }
 
   def executeLpDetailPageView(sparkSession: SparkSession): Unit = {
@@ -407,13 +375,7 @@ object DataTransfer {
       }
     })
 
-    jsonRdd.collect().foreach(item => {
-      if (debug) {
-        fileWriter("/Users/hdb-dsj-003/Desktop/lpDetailPageView.txt", item)
-      } else {
-
-      }
-    })
+    jsonRdd.coalesce(10, true).saveAsTextFile("hdfs://" + nameNode + ":8020/temp/wangyuhang/hft/lpDetailPageView")
   }
 
   def executeFxPosterClick(sparkSession: SparkSession): Unit = {
@@ -446,12 +408,7 @@ object DataTransfer {
       }
     })
 
-    jsonRdd.collect().foreach(item => {
-      if (debug) {
-        fileWriter("/Users/hdb-dsj-003/Desktop/fxPosterClick.txt", item)
-      } else {
-      }
-    })
+    jsonRdd.coalesce(10, true).saveAsTextFile("hdfs://" + nameNode + ":8020/temp/wangyuhang/hft/fxPosterClick")
   }
 
   def executeLxPhoneClick(sparkSession: SparkSession): Unit = {
@@ -484,12 +441,7 @@ object DataTransfer {
       }
     })
 
-    jsonRdd.collect().foreach(item => {
-      if (debug) {
-        fileWriter("/Users/hdb-dsj-003/Desktop/lxPhoneClick.txt", item)
-      } else {
-      }
-    })
+    jsonRdd.coalesce(10, true).saveAsTextFile("hdfs://" + nameNode + ":8020/temp/wangyuhang/hft/lxPhoneClick")
   }
 
   def executeLxCustomerClick(sparkSession: SparkSession): Unit = {
@@ -522,12 +474,7 @@ object DataTransfer {
       }
     })
 
-    jsonRdd.collect().foreach(item => {
-      if (debug) {
-        fileWriter("/Users/hdb-dsj-003/Desktop/lxCustomerClick.txt", item)
-      } else {
-      }
-    })
+    jsonRdd.coalesce(10, true).saveAsTextFile("hdfs://" + nameNode + ":8020/temp/wangyuhang/hft/lxCustomerClick")
   }
 
   def executeRegisterPageView(sparkSession: SparkSession): Unit = {
@@ -555,13 +502,7 @@ object DataTransfer {
       }
     })
 
-    jsonRdd.collect().foreach(item => {
-      if (debug) {
-        fileWriter("/Users/hdb-dsj-003/Desktop/registerPageView.txt", item)
-      } else {
-
-      }
-    })
+    jsonRdd.coalesce(10, true).saveAsTextFile("hdfs://" + nameNode + ":8020/temp/wangyuhang/hft/registerPageView")
   }
 
   def fileWriter(path: String, data: String): Unit = {
