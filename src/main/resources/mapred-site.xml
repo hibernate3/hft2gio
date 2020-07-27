@@ -60,11 +60,11 @@
   </property>
   <property>
     <name>mapreduce.job.reduces</name>
-    <value>224</value>
+    <value>384</value>
   </property>
   <property>
     <name>mapreduce.task.io.sort.mb</name>
-    <value>1792</value>
+    <value>256</value>
   </property>
   <property>
     <name>mapreduce.map.speculative</name>
@@ -80,19 +80,19 @@
   </property>
   <property>
     <name>mapreduce.jobhistory.address</name>
-    <value>bigdata-prd-zk-01:10020</value>
+    <value>bigdata-prd-cdh-zk-02:10020</value>
   </property>
   <property>
     <name>mapreduce.jobhistory.webapp.address</name>
-    <value>bigdata-prd-zk-01:19888</value>
+    <value>bigdata-prd-cdh-zk-02:19888</value>
   </property>
   <property>
     <name>mapreduce.jobhistory.webapp.https.address</name>
-    <value>bigdata-prd-zk-01:19890</value>
+    <value>bigdata-prd-cdh-zk-02:19890</value>
   </property>
   <property>
     <name>mapreduce.jobhistory.admin.address</name>
-    <value>bigdata-prd-zk-01:10033</value>
+    <value>bigdata-prd-cdh-zk-02:10033</value>
   </property>
   <property>
     <name>mapreduce.framework.name</name>

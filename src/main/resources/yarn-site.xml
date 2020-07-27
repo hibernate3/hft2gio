@@ -28,7 +28,7 @@
   </property>
   <property>
     <name>yarn.resourcemanager.zk-address</name>
-    <value>bigdata-prd-zk-02:2181,bigdata-prd-nn-02:2181,bigdata-prd-nn-01:2181,bigdata-prd-zk-01:2181,bigdata-prd-zk-03:2181</value>
+    <value>bigdata-prd-cdh-zk-01:2181,bigdata-prd-cdh-nn-01:2181,bigdata-prd-cdh-zk-03:2181,bigdata-prd-cdh-zk-02:2181,bigdata-prd-cdh-nn-02:2181</value>
   </property>
   <property>
     <name>yarn.resourcemanager.store.class</name>
@@ -47,56 +47,56 @@
     <value>yarnRM</value>
   </property>
   <property>
-    <name>yarn.resourcemanager.address.rm194</name>
-    <value>bigdata-prd-nn-01:8032</value>
+    <name>yarn.resourcemanager.address.rm237</name>
+    <value>bigdata-prd-cdh-nn-01:8032</value>
   </property>
   <property>
-    <name>yarn.resourcemanager.scheduler.address.rm194</name>
-    <value>bigdata-prd-nn-01:8030</value>
+    <name>yarn.resourcemanager.scheduler.address.rm237</name>
+    <value>bigdata-prd-cdh-nn-01:8030</value>
   </property>
   <property>
-    <name>yarn.resourcemanager.resource-tracker.address.rm194</name>
-    <value>bigdata-prd-nn-01:8031</value>
+    <name>yarn.resourcemanager.resource-tracker.address.rm237</name>
+    <value>bigdata-prd-cdh-nn-01:8031</value>
   </property>
   <property>
-    <name>yarn.resourcemanager.admin.address.rm194</name>
-    <value>bigdata-prd-nn-01:8033</value>
+    <name>yarn.resourcemanager.admin.address.rm237</name>
+    <value>bigdata-prd-cdh-nn-01:8033</value>
   </property>
   <property>
-    <name>yarn.resourcemanager.webapp.address.rm194</name>
-    <value>bigdata-prd-nn-01:8088</value>
+    <name>yarn.resourcemanager.webapp.address.rm237</name>
+    <value>bigdata-prd-cdh-nn-01:8088</value>
   </property>
   <property>
-    <name>yarn.resourcemanager.webapp.https.address.rm194</name>
-    <value>bigdata-prd-nn-01:8090</value>
+    <name>yarn.resourcemanager.webapp.https.address.rm237</name>
+    <value>bigdata-prd-cdh-nn-01:8090</value>
   </property>
   <property>
-    <name>yarn.resourcemanager.address.rm247</name>
-    <value>bigdata-prd-nn-02:8032</value>
+    <name>yarn.resourcemanager.address.rm285</name>
+    <value>bigdata-prd-cdh-nn-02:8032</value>
   </property>
   <property>
-    <name>yarn.resourcemanager.scheduler.address.rm247</name>
-    <value>bigdata-prd-nn-02:8030</value>
+    <name>yarn.resourcemanager.scheduler.address.rm285</name>
+    <value>bigdata-prd-cdh-nn-02:8030</value>
   </property>
   <property>
-    <name>yarn.resourcemanager.resource-tracker.address.rm247</name>
-    <value>bigdata-prd-nn-02:8031</value>
+    <name>yarn.resourcemanager.resource-tracker.address.rm285</name>
+    <value>bigdata-prd-cdh-nn-02:8031</value>
   </property>
   <property>
-    <name>yarn.resourcemanager.admin.address.rm247</name>
-    <value>bigdata-prd-nn-02:8033</value>
+    <name>yarn.resourcemanager.admin.address.rm285</name>
+    <value>bigdata-prd-cdh-nn-02:8033</value>
   </property>
   <property>
-    <name>yarn.resourcemanager.webapp.address.rm247</name>
-    <value>bigdata-prd-nn-02:8088</value>
+    <name>yarn.resourcemanager.webapp.address.rm285</name>
+    <value>bigdata-prd-cdh-nn-02:8088</value>
   </property>
   <property>
-    <name>yarn.resourcemanager.webapp.https.address.rm247</name>
-    <value>bigdata-prd-nn-02:8090</value>
+    <name>yarn.resourcemanager.webapp.https.address.rm285</name>
+    <value>bigdata-prd-cdh-nn-02:8090</value>
   </property>
   <property>
     <name>yarn.resourcemanager.ha.rm-ids</name>
-    <value>rm194,rm247</value>
+    <value>rm237,rm285</value>
   </property>
   <property>
     <name>yarn.resourcemanager.client.thread-count</name>
@@ -120,7 +120,7 @@
   </property>
   <property>
     <name>yarn.scheduler.maximum-allocation-mb</name>
-    <value>79872</value>
+    <value>147456</value>
   </property>
   <property>
     <name>yarn.scheduler.minimum-allocation-vcores</name>
@@ -132,7 +132,7 @@
   </property>
   <property>
     <name>yarn.scheduler.maximum-allocation-vcores</name>
-    <value>16</value>
+    <value>64</value>
   </property>
   <property>
     <name>yarn.resourcemanager.amliveliness-monitor.interval-ms</name>

@@ -21,7 +21,9 @@ object DataTransfer {
   case class LxPhoneClick(user_id: String, event_time: String, element_target_url: String)
   case class LxCustomerClick(user_id: String, event_time: String, url: String)
 
-  val nameNode: String = "10.71.81.145"
+  val nameNode: String = "10.71.81.220"
+
+  val numPartitions: Int = 5;
 
   def main(args: Array[String]): Unit = {
     val sqlContext = SparkSession.builder().appName(this.getClass.getSimpleName).enableHiveSupport().getOrCreate()
@@ -50,7 +52,7 @@ object DataTransfer {
     if (debug) {
       sql = "select * from buried_point.ods_ext_hdb_buried_data"
     } else {
-      sql = "select * from buried_point.ods_ext_hdb_buried_data where length(user_id)>10 and event='AppClick' and element_content='首页' and element_type='TextView'"
+      sql = "select * from buried_point.ods_ext_hdb_buried_data where length(user_id)>10 and event='AppClick' and element_content='首页' and element_type='TextView' and createday >= '2020-01-01'"
     }
 
     import sparkSession.implicits._
@@ -79,7 +81,7 @@ object DataTransfer {
     })
 
 //    jsonRdd.coalesce(10, true).saveAsTextFile("hdfs://bigdata-prd-nn-02:8020/temp/wangyuhang/syPageView_0")
-    jsonRdd.coalesce(10, true).saveAsTextFile("hdfs://" + nameNode + ":8020/temp/wangyuhang/hft/syPageView")
+    jsonRdd.coalesce(numPartitions, true).saveAsTextFile("hdfs://" + nameNode + ":8020/temp/wangyuhang/hft/syPageView")
   }
 
   def executeSyChooseCity(sparkSession: SparkSession): Unit ={
@@ -87,7 +89,7 @@ object DataTransfer {
     if (debug) {
       sql = "select * from buried_point.ods_ext_hdb_buried_data"
     } else {
-      sql = "select * from buried_point.ods_ext_hdb_buried_data where length(user_id)>10 and event='AppClick' and element_id='city' and element_type='TextView'"
+      sql = "select * from buried_point.ods_ext_hdb_buried_data where length(user_id)>10 and event='AppClick' and element_id='city' and element_type='TextView' and createday >= '2020-01-01'"
     }
 
     import sparkSession.implicits._
@@ -121,11 +123,11 @@ object DataTransfer {
       }
     })
 
-    jsonRdd.coalesce(10, true).saveAsTextFile("hdfs://" + nameNode + ":8020/temp/wangyuhang/hft/syChooseCity")
+    jsonRdd.coalesce(numPartitions, true).saveAsTextFile("hdfs://" + nameNode + ":8020/temp/wangyuhang/hft/syChooseCity")
   }
 
   def executeLpListClick(sparkSession: SparkSession): Unit ={
-    var sql = "select * from buried_point.ods_ext_hdb_buried_data where length(user_id)>10 and element_content rlike '^[\u4e00-\u9fa5].*[-]{1}\\d{8}$'"
+    var sql = "select * from buried_point.ods_ext_hdb_buried_data where length(user_id)>10 and element_content rlike '^[\u4e00-\u9fa5].*[-]{1}\\d{8}$' and createday >= '2020-01-01'"
 
     import sparkSession.implicits._
     var dataRdd: RDD[LpListClick] = sparkSession.sql(sql).as[LpListClick].rdd
@@ -154,11 +156,11 @@ object DataTransfer {
       }
     })
 
-    jsonRdd.coalesce(10, true).saveAsTextFile("hdfs://" + nameNode + ":8020/temp/wangyuhang/hft/lpListClick")
+    jsonRdd.coalesce(numPartitions, true).saveAsTextFile("hdfs://" + nameNode + ":8020/temp/wangyuhang/hft/lpListClick")
   }
 
   def executeSearchResultPageView(sparkSession: SparkSession): Unit ={
-    var sql = "select * from buried_point.ods_ext_hdb_buried_data where length(user_id)>10 and event='Pageview' and title='搜索楼盘'"
+    var sql = "select * from buried_point.ods_ext_hdb_buried_data where length(user_id)>10 and event='Pageview' and title='搜索楼盘' and createday >= '2020-01-01'"
 
     import sparkSession.implicits._
     var dataRdd: RDD[BaseEvent] = sparkSession.sql(sql).as[BaseEvent].rdd
@@ -182,11 +184,11 @@ object DataTransfer {
       }
     })
 
-    jsonRdd.coalesce(10, true).saveAsTextFile("hdfs://" + nameNode + ":8020/temp/wangyuhang/hft/searchResultPageView")
+    jsonRdd.coalesce(numPartitions, true).saveAsTextFile("hdfs://" + nameNode + ":8020/temp/wangyuhang/hft/searchResultPageView")
   }
 
   def executeSearchResultClick(sparkSession: SparkSession): Unit ={
-    var sql = "select * from buried_point.ods_ext_hdb_buried_data where length(user_id)>10 and event='WebClick' and title='搜索楼盘'"
+    var sql = "select * from buried_point.ods_ext_hdb_buried_data where length(user_id)>10 and event='WebClick' and title='搜索楼盘' and createday >= '2020-01-01'"
 
     import sparkSession.implicits._
     var dataRdd: RDD[SearchResultClick] = sparkSession.sql(sql).as[SearchResultClick].rdd
@@ -215,11 +217,11 @@ object DataTransfer {
       }
     })
 
-    jsonRdd.coalesce(10, true).saveAsTextFile("hdfs://" + nameNode + ":8020/temp/wangyuhang/hft/searchResultClick")
+    jsonRdd.coalesce(numPartitions, true).saveAsTextFile("hdfs://" + nameNode + ":8020/temp/wangyuhang/hft/searchResultClick")
   }
 
   def executeZxBannerClick(sparkSession: SparkSession): Unit = {
-    var sql = "select * from buried_point.ods_ext_hdb_buried_data where length(user_id)>10 and event='Pageview' and title='资讯详情'"
+    var sql = "select * from buried_point.ods_ext_hdb_buried_data where length(user_id)>10 and event='Pageview' and title='资讯详情' and createday >= '2020-01-01'"
 
     import sparkSession.implicits._
     var dataRdd: RDD[ZxBannerClick] = sparkSession.sql(sql).as[ZxBannerClick].rdd
@@ -248,11 +250,11 @@ object DataTransfer {
       }
     })
 
-    jsonRdd.coalesce(10, true).saveAsTextFile("hdfs://" + nameNode + ":8020/temp/wangyuhang/hft/zxBannerClick")
+    jsonRdd.coalesce(numPartitions, true).saveAsTextFile("hdfs://" + nameNode + ":8020/temp/wangyuhang/hft/zxBannerClick")
   }
 
   def executeZxListPageView(sparkSession: SparkSession): Unit = {
-    var sql = "select * from buried_point.ods_ext_hdb_buried_data where length(user_id)>10 and event='Pageview' and title='资讯列表'"
+    var sql = "select * from buried_point.ods_ext_hdb_buried_data where length(user_id)>10 and event='Pageview' and title='资讯列表' and createday >= '2020-01-01'"
 
     import sparkSession.implicits._
     var dataRdd: RDD[BaseEvent] = sparkSession.sql(sql).as[BaseEvent].rdd
@@ -276,11 +278,11 @@ object DataTransfer {
       }
     })
 
-    jsonRdd.coalesce(10, true).saveAsTextFile("hdfs://" + nameNode + ":8020/temp/wangyuhang/hft/zxListPageView")
+    jsonRdd.coalesce(numPartitions, true).saveAsTextFile("hdfs://" + nameNode + ":8020/temp/wangyuhang/hft/zxListPageView")
   }
 
   def executeZxListClick(sparkSession: SparkSession): Unit = {
-    var sql = "select * from buried_point.ods_ext_hdb_buried_data where length(user_id)>10 and event='WebClick' and title='资讯详情'"
+    var sql = "select * from buried_point.ods_ext_hdb_buried_data where length(user_id)>10 and event='WebClick' and title='资讯详情' and createday >= '2020-01-01'"
 
     import sparkSession.implicits._
     var dataRdd: RDD[ZxListClick] = sparkSession.sql(sql).as[ZxListClick].rdd
@@ -309,11 +311,11 @@ object DataTransfer {
       }
     })
 
-    jsonRdd.coalesce(10, true).saveAsTextFile("hdfs://" + nameNode + ":8020/temp/wangyuhang/hft/zxListClick")
+    jsonRdd.coalesce(numPartitions, true).saveAsTextFile("hdfs://" + nameNode + ":8020/temp/wangyuhang/hft/zxListClick")
   }
 
   def executeZxDetailPageView(sparkSession: SparkSession): Unit = {
-    var sql = "select * from buried_point.ods_ext_hdb_buried_data where length(user_id)>10 and event='Pageview' and title='资讯详情'"
+    var sql = "select * from buried_point.ods_ext_hdb_buried_data where length(user_id)>10 and event='Pageview' and title='资讯详情' and createday >= '2020-01-01'"
 
     import sparkSession.implicits._
     var dataRdd: RDD[ZxDetailPageView] = sparkSession.sql(sql).as[ZxDetailPageView].rdd
@@ -342,11 +344,11 @@ object DataTransfer {
       }
     })
 
-    jsonRdd.coalesce(10, true).saveAsTextFile("hdfs://" + nameNode + ":8020/temp/wangyuhang/hft/zxDetailPageView")
+    jsonRdd.coalesce(numPartitions, true).saveAsTextFile("hdfs://" + nameNode + ":8020/temp/wangyuhang/hft/zxDetailPageView")
   }
 
   def executeLpDetailPageView(sparkSession: SparkSession): Unit = {
-    var sql = "select * from buried_point.ods_ext_hdb_buried_data where length(user_id)>10 and event='Pageview' and title='楼盘详情'"
+    var sql = "select * from buried_point.ods_ext_hdb_buried_data where length(user_id)>10 and event='Pageview' and title='楼盘详情' and createday >= '2020-01-01'"
 
     import sparkSession.implicits._
     var dataRdd: RDD[LpDetailPageView] = sparkSession.sql(sql).as[LpDetailPageView].rdd
@@ -375,11 +377,11 @@ object DataTransfer {
       }
     })
 
-    jsonRdd.coalesce(10, true).saveAsTextFile("hdfs://" + nameNode + ":8020/temp/wangyuhang/hft/lpDetailPageView")
+    jsonRdd.coalesce(numPartitions, true).saveAsTextFile("hdfs://" + nameNode + ":8020/temp/wangyuhang/hft/lpDetailPageView")
   }
 
   def executeFxPosterClick(sparkSession: SparkSession): Unit = {
-    var sql = "select * from buried_point.ods_ext_hdb_buried_data where length(user_id)>10 and event='Pageview' and title='优惠海报'"
+    var sql = "select * from buried_point.ods_ext_hdb_buried_data where length(user_id)>10 and event='Pageview' and title='优惠海报' and createday >= '2020-01-01'"
 
     import sparkSession.implicits._
     var dataRdd: RDD[FxPosterClick] = sparkSession.sql(sql).as[FxPosterClick].rdd
@@ -408,11 +410,11 @@ object DataTransfer {
       }
     })
 
-    jsonRdd.coalesce(10, true).saveAsTextFile("hdfs://" + nameNode + ":8020/temp/wangyuhang/hft/fxPosterClick")
+    jsonRdd.coalesce(numPartitions, true).saveAsTextFile("hdfs://" + nameNode + ":8020/temp/wangyuhang/hft/fxPosterClick")
   }
 
   def executeLxPhoneClick(sparkSession: SparkSession): Unit = {
-    var sql = "select * from buried_point.ods_ext_hdb_buried_data where length(user_id)>10 and event='WebClick' and title='楼盘详情' and element_content='电话'"
+    var sql = "select * from buried_point.ods_ext_hdb_buried_data where length(user_id)>10 and event='WebClick' and title='楼盘详情' and element_content='电话' and createday >= '2020-01-01'"
 
     import sparkSession.implicits._
     var dataRdd: RDD[LxPhoneClick] = sparkSession.sql(sql).as[LxPhoneClick].rdd
@@ -441,11 +443,11 @@ object DataTransfer {
       }
     })
 
-    jsonRdd.coalesce(10, true).saveAsTextFile("hdfs://" + nameNode + ":8020/temp/wangyuhang/hft/lxPhoneClick")
+    jsonRdd.coalesce(numPartitions, true).saveAsTextFile("hdfs://" + nameNode + ":8020/temp/wangyuhang/hft/lxPhoneClick")
   }
 
   def executeLxCustomerClick(sparkSession: SparkSession): Unit = {
-    var sql = "select * from buried_point.ods_ext_hdb_buried_data where length(user_id)>10 and event='Pageview' and title='在线咨询'"
+    var sql = "select * from buried_point.ods_ext_hdb_buried_data where length(user_id)>10 and event='Pageview' and title='在线咨询' and createday >= '2020-01-01'"
 
     import sparkSession.implicits._
     var dataRdd: RDD[LxCustomerClick] = sparkSession.sql(sql).as[LxCustomerClick].rdd
@@ -474,11 +476,11 @@ object DataTransfer {
       }
     })
 
-    jsonRdd.coalesce(10, true).saveAsTextFile("hdfs://" + nameNode + ":8020/temp/wangyuhang/hft/lxCustomerClick")
+    jsonRdd.coalesce(numPartitions, true).saveAsTextFile("hdfs://" + nameNode + ":8020/temp/wangyuhang/hft/lxCustomerClick")
   }
 
   def executeRegisterPageView(sparkSession: SparkSession): Unit = {
-    var sql = "select * from buried_point.ods_ext_hdb_buried_data where length(user_id)>10 and event='Pageview' and title='恒大地产诚邀恒房通会员'"
+    var sql = "select * from buried_point.ods_ext_hdb_buried_data where length(user_id)>10 and event='Pageview' and title='恒大地产诚邀恒房通会员' and createday >= '2020-01-01'"
 
     import sparkSession.implicits._
     var dataRdd: RDD[BaseEvent] = sparkSession.sql(sql).as[BaseEvent].rdd
@@ -502,7 +504,7 @@ object DataTransfer {
       }
     })
 
-    jsonRdd.coalesce(10, true).saveAsTextFile("hdfs://" + nameNode + ":8020/temp/wangyuhang/hft/registerPageView")
+    jsonRdd.coalesce(numPartitions, true).saveAsTextFile("hdfs://" + nameNode + ":8020/temp/wangyuhang/hft/registerPageView")
   }
 
   def fileWriter(path: String, data: String): Unit = {
